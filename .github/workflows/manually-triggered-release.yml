@@ -6,14 +6,6 @@ on:
         description: 'Please provide the version you want to release'
         default: '1.0.0'
         required: true
-      git_user_name:
-        description: 'Please provide git user.name'
-        required: false
-        default: 'Artur Jankowski'
-      git_user_email:
-        description: 'Please provide a git user.email'
-        required: false
-        default: 'ajankowski@box.com'
   pull_request:
     branches:
       - 'aj/release_test'
@@ -26,16 +18,14 @@ jobs:
     - name: Checkout main branch
       uses: actions/checkout@v2
       with:
-        ref: main
+        ref: ${{ github.ref_name }}
         token: ${{ secrets.GITHUB_TOKEN }}
         fetch-depth: 0
         submodules: true
     - name: Setup git user
       run: |
-          git config --global user.name "${{ github.event.inputs.git_user_name }}"
-          git config --global user.email "${{ github.event.inputs.git_user_email }}"
-# git config --global user.name "$(git --no-pager log --format=format:'%an' -n 1)"
-# git config --global user.email "$(git -#-no-pager log --format=format:'%ae' -n 1)"
+          git config --global user.name "Artur Jankowski"
+          git config --global user.email "ajankowski@box.com"
     # - name: Env variable
     #   env:
     #     AUTHORIZED_USERS: ${{ secrets.AUTHORIZED_USERS }}
@@ -55,4 +45,4 @@ jobs:
       run: echo "$GITHUB_CONTEXT"
     - name: Run fastlane release script
       run: |
-        bundle exec fastlane ios release version:${{ github.event.inputs.version }} github_token:${{ secrets.RELEASE_TOKEN }} is_draft:true
+        bundle exec fastlane ios release version:${{ github.event.inputs.version }} github_token:${{ secrets.RELEASE_TOKEN }} release_branch: ${{ github.ref_name }} is_draft:true
