@@ -1,10 +1,9 @@
 default_platform(:ios)
 
 platform :ios do
-  desc "Description of what the lane does"
-  lane :release do |options|
+  desc "Create PR with release changes"
+  lane :make_pull_request do |options|
     version = options[:version]
-    is_draft = options[:is_draft] || false
     dry_run = options[:dry_run] || false
     github_token = options[:github_token] || ENV["GITHUB_TOKEN"]
     release_branch = options[:release_branch] || "main"
@@ -14,26 +13,33 @@ platform :ios do
       puts("version is: #{version}!")
     end
 
+    update_changelog(version: version)
+    update_version(version: version)
+
+    create_github_pull_request(
+      version: version,
+      release_branch: release_branch,
+      github_token: github_token
+    )
+  end
+
+  desc "Create new release on github"
+  lane :make_release do |options|
+    dry_run = options[:dry_run] || false
+    github_token = options[:github_token] || ENV["GITHUB_TOKEN"]
+    release_branch = options[:release_branch] || "main"
+
+    version = get_next_release_version()
     release_notes = get_release_notes()
 
-    update_changelog(
-      version: version
-    )
-
-    # update_version(version: version)
-
-    commit_release_changes_with_tag(
+    create_github_release(
       version: version,
-      release_notes: release_notes
+      release_notes: release_notes,
+      github_token: github_token,
+      release_branch: release_branch,
+      dry_run: dry_run,
+      is_draft: is_draft
     )
-    # create_release_on_github(
-    #   version: version,
-    #   release_notes: release_notes,
-    #   github_token: github_token,
-    #   release_branch: release_branch,
-    #   dry_run: dry_run,
-    #   is_draft: is_draft
-    # )
   end
 
 ##############################################################################
@@ -41,7 +47,7 @@ platform :ios do
 ##############################################################################
 
   desc "Create release on GitHub"
-  private_lane :create_release_on_github do |options|
+  private_lane :create_github_release do |options|
     version = options[:version]
     version_tag = "v#{version}"
     release_notes = options[:release_notes]
@@ -52,6 +58,8 @@ platform :ios do
     release_notes_filename = ENV["RELEASE_NOTES_TMP_FILENAME"]
     release_notes_path = "../#{release_notes_filename}"
 
+
+    puts("version: #{version} version: #{version} version: #{version} version: #{version} version: #{version}" )
     if dry_run == true
       UI.important("Running in \"dry run\" mode. Release won't be published.")
     else
@@ -76,32 +84,27 @@ platform :ios do
   end
 
   desc "Commit version update"
-  private_lane :commit_release_changes_with_tag do |options|
+  private_lane :create_github_pull_request do |options|
     version = options[:version]
     github_token = options[:github_token]
-    version_tag = "v#{version}"
-    release_notes = "#{version_tag}\n\n" + options[:release_notes]
-    release_notes_filename = ENV["RELEASE_NOTES_TMP_FILENAME"]
-    commit_title = "chore: release #{version_tag}"
+    release_branch = options[:release_branch]
+    commit_version_tag = "v#{version}"
+    commit_title = "chore: release #{commit_version_tag}"
 
-    puts("*#{version_tag}*")
+    puts("*#{commit_version_tag}*")
 
-    
     Dir.chdir("..") do
-      sh("git checkout -b #{version_tag}")
+      sh("git checkout -b #{commit_version_tag}")
       sh("git add .")
-      # File.write(release_notes_filename, release_notes)
       sh("git commit -am \"#{commit_title}\"")
-      # sh("git tag -F#{release_notes_filename} #{version_tag}")
-      # sh("git push --atomic origin HEAD #{version_tag}")
-      # sh("rm #{release_notes_filename}")
+      sh("git push origin #{commit_version_tag}")
 
     create_pull_request(
-      api_token: github_token,      # optional, defaults to ENV["GITHUB_API_TOKEN"]
+      api_token: github_token,
       repo: "arjankowski/github-actions-release-test",
-      title: commit_title,
-      head: version_tag,       # optional, defaults to current branch name
-      base: "main", # optional, defaults to "master"
+      title: "#{commit_title}",
+      head: "#{commit_version_tag}",
+      base: "#{release_branch}",
     )
     end
   end
