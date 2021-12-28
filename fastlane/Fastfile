@@ -1,10 +1,9 @@
 default_platform(:ios)
 
 platform :ios do
-  desc "Description of what the lane does"
-  lane :release do |options|
+  desc "Create PR with release changes"
+  lane :make_pull_request do |options|
     version = options[:version]
-    is_draft = options[:is_draft] || false
     dry_run = options[:dry_run] || false
     github_token = options[:github_token] || ENV["GITHUB_TOKEN"]
     release_branch = options[:release_branch] || "main"
@@ -14,26 +13,30 @@ platform :ios do
       puts("version is: #{version}!")
     end
 
-    release_notes = get_release_notes()
+    update_changelog(version: version)
+    update_version(version: version)
 
-    update_changelog(
-      version: version
-    )
-
-    # update_version(version: version)
-
-    commit_release_changes_with_tag(
+    create_github_pull_request(
       version: version,
-      release_notes: release_notes
+      release_branch: release_branch,
+      github_token: github_token
     )
-    # create_release_on_github(
-    #   version: version,
-    #   release_notes: release_notes,
-    #   github_token: github_token,
-    #   release_branch: release_branch,
-    #   dry_run: dry_run,
-    #   is_draft: is_draft
-    # )
+  end
+
+  desc "Create new release on github"
+  lane :make_release do |options|
+    dry_run = options[:dry_run] || false
+    github_token = options[:github_token] || ENV["GITHUB_TOKEN"]
+    release_branch = options[:release_branch] || "main"
+
+    version = get_next_release_version()
+
+    create_github_release(
+      version: version,
+      release_notes: release_notes,
+      github_token: github_token,
+      dry_run: dry_run
+    )
   end
 
 ##############################################################################
@@ -41,16 +44,12 @@ platform :ios do
 ##############################################################################
 
   desc "Create release on GitHub"
-  private_lane :create_release_on_github do |options|
+  private_lane :create_github_release do |options|
     version = options[:version]
     version_tag = "v#{version}"
-    release_notes = options[:release_notes]
     github_token = options[:github_token]
     release_branch = options[:release_branch]
     dry_run = options[:dry_run] 
-    is_draft = options[:is_draft]
-    release_notes_filename = ENV["RELEASE_NOTES_TMP_FILENAME"]
-    release_notes_path = "../#{release_notes_filename}"
 
     if dry_run == true
       UI.important("Running in \"dry run\" mode. Release won't be published.")
@@ -59,49 +58,39 @@ platform :ios do
         UI.user_error!("GitHub Token is required to make release.")
       end
 
-      File.write("#{release_notes_path}", release_notes)
-
       set_github_release(
       repository_name: "arjankowski/github-actions-release-test",
       api_token: github_token,
-      name: "#{version_tag}",
-      tag_name: "#{version_tag}",
-      description: (File.read("#{release_notes_path}") rescue "No changelog provided"),
-      commitish: "#{release_branch}",
-      is_draft: is_draft
+      name: version_tag,
+      tag_name: version_tag,
+      description: release_notes,
+      commitish: release_branch
     )
-
-    sh("rm #{release_notes_path}")
     end
   end
 
   desc "Commit version update"
-  private_lane :commit_release_changes_with_tag do |options|
+  private_lane :create_github_pull_request do |options|
     version = options[:version]
     github_token = options[:github_token]
-    version_tag = "v#{version}"
-    release_notes = "#{version_tag}\n\n" + options[:release_notes]
-    release_notes_filename = ENV["RELEASE_NOTES_TMP_FILENAME"]
-    commit_title = "chore: release #{version_tag}"
+    release_branch = options[:release_branch]
+    commit_version_tag = "v#{version}"
+    commit_title = "chore: release #{commit_version_tag}"
 
-    puts("*#{version_tag}*")
+    puts("*#{commit_version_tag}*")
 
-    
     Dir.chdir("..") do
-      sh("git checkout -b #{version_tag}")
+      sh("git checkout -b #{commit_version_tag}")
       sh("git add .")
-      # File.write(release_notes_filename, release_notes)
       sh("git commit -am \"#{commit_title}\"")
-      # sh("git tag -F#{release_notes_filename} #{version_tag}")
-      # sh("git push --atomic origin HEAD #{version_tag}")
-      # sh("rm #{release_notes_filename}")
+      sh("git push origin #{commit_version_tag}")
 
     create_pull_request(
-      api_token: github_token,      # optional, defaults to ENV["GITHUB_API_TOKEN"]
+      api_token: github_token,
       repo: "arjankowski/github-actions-release-test",
-      title: commit_title,
-      head: version_tag,       # optional, defaults to current branch name
-      base: "main", # optional, defaults to "master"
+      title: "#{commit_title}",
+      head: "#{commit_version_tag}",
+      base: "#{release_branch}",
     )
     end
   end
@@ -145,9 +134,14 @@ platform :ios do
 
 desc "Return release notes based on conventional commits"
 private_lane :get_release_notes do |options|
-  release_notes = ""
+  version = options[:version]
+  puts("version: #{version}!!")
+  escaped_version = sh("echo \"#{version}\" | sed -E 's/(\\.)/\\\\\\./g' | tr -d \"\n\"")
+  puts("!#{escaped_version}!")
+  release_notes = "s"
   Dir.chdir("..") do
-    release_notes = sh("standard-version --skip.commit --skip.push --skip.tag --dry-run | sed -ne \"/---/,/---/p\" | sed -e \"$ d\" | sed 1,4d ")
+    # release_notes = sh("standard-version --skip.commit --skip.push --skip.tag --dry-run | sed -ne \"/---/,/---/p\" | sed -e \"$ d\" | sed 1,4d ")
+    release_notes = sh("sed -nE '/^## \\[#{escaped_version}\\]/,/^## \\[[0-9]+\.[0-9]+\.[0-9]+\\]/p' CHANGELOG.md | sed '1,2d' | sed '$d'")
   end
   
   release_notes
@@ -181,6 +175,7 @@ end
   desc "Update CHANGELOG.md file based on conventional commits"
   private_lane :update_changelog do |options|
     version = options[:version]
+
     Dir.chdir("..") do
       sh("standard-version --skip.tag --skip.commit --release-as #{version}")
     end
