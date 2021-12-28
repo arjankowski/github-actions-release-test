@@ -24,7 +24,8 @@ platform :ios do
 
     commit_release_changes_with_tag(
       version: version,
-      release_notes: release_notes
+      release_notes: release_notes,
+      github_token: github_token
     )
     # create_release_on_github(
     #   version: version,
@@ -99,8 +100,8 @@ platform :ios do
     create_pull_request(
       api_token: github_token,      # optional, defaults to ENV["GITHUB_API_TOKEN"]
       repo: "arjankowski/github-actions-release-test",
-      title: commit_title,
-      head: version_tag,       # optional, defaults to current branch name
+      title: "#{commit_title}",
+      head: "#{version_tag}",       # optional, defaults to current branch name
       base: "main", # optional, defaults to "master"
     )
     end
