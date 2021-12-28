@@ -94,7 +94,7 @@ platform :ios do
       # File.write(release_notes_filename, release_notes)
       sh("git commit -am \"#{commit_title}\"")
       # sh("git tag -F#{release_notes_filename} #{version_tag}")
-      # sh("git push --atomic origin HEAD #{version_tag}")
+      sh("git push origin #{version_tag}")
       # sh("rm #{release_notes_filename}")
 
     create_pull_request(
