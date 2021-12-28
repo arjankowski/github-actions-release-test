@@ -16,11 +16,16 @@ or alternatively using `brew install fastlane`
 
 # Available Actions
 ## iOS
-### ios release
+### ios make_pull_request
 ```
-fastlane ios release
+fastlane ios make_pull_request
 ```
-Description of what the lane does
+Create PR with release changes
+### ios make_release
+```
+fastlane ios make_release
+```
+Create new release on github
 
 ----
 
