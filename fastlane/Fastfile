@@ -24,7 +24,8 @@ platform :ios do
 
     commit_release_changes_with_tag(
       version: version,
-      release_notes: release_notes
+      release_notes: release_notes,
+      github_token: github_token
     )
     # create_release_on_github(
     #   version: version,
@@ -90,18 +91,15 @@ platform :ios do
     Dir.chdir("..") do
       sh("git checkout -b #{version_tag}")
       sh("git add .")
-      # File.write(release_notes_filename, release_notes)
       sh("git commit -am \"#{commit_title}\"")
-      # sh("git tag -F#{release_notes_filename} #{version_tag}")
-      # sh("git push --atomic origin HEAD #{version_tag}")
-      # sh("rm #{release_notes_filename}")
+      sh("git push origin #{version_tag}")
 
     create_pull_request(
-      api_token: github_token,      # optional, defaults to ENV["GITHUB_API_TOKEN"]
+      api_token: github_token,
       repo: "arjankowski/github-actions-release-test",
-      title: commit_title,
-      head: version_tag,       # optional, defaults to current branch name
-      base: "main", # optional, defaults to "master"
+      title: "#{commit_title}",
+      head: "#{version_tag}",
+      base: "main",
     )
     end
   end
