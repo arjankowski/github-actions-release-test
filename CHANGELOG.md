@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/arjankowski/github-actions-release-test/compare/v2.0.0...v2.1.0) (2021-12-29)
+
+
+### Bug Fixes
+
+* Fix fastlane script ([#12](https://github.com/arjankowski/github-actions-release-test/issues/12)) ([81cc5f3](https://github.com/arjankowski/github-actions-release-test/commit/81cc5f338c9b4ec9a28aa22cb9f9dc102f2cf0b1))
+
+
+### New Features and Enhancements
+
+* change fastlane script ([#11](https://github.com/arjankowski/github-actions-release-test/issues/11)) ([3404dc5](https://github.com/arjankowski/github-actions-release-test/commit/3404dc5aa3afca486dd6bdf2f9c90a50eca52874))
+
 ## [2.0.0](https://github.com/arjankowski/github-actions-release-test/compare/v1.0.0...v2.0.0) (2021-12-29)
 
 
