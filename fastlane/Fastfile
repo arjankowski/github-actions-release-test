@@ -41,6 +41,24 @@ platform :ios do
     )
   end
 
+  desc "Create new release on github"
+  lane :make_publish_pods do |options|
+    dry_run = options[:dry_run] || false
+    github_token = options[:github_token] || ENV["GITHUB_TOKEN"]
+    release_branch = options[:release_branch] || "main"
+
+    version = get_next_release_version()
+    release_notes = get_release_notes(version: version)
+
+    create_github_release(
+      version: version,
+      release_notes: release_notes,
+      github_token: github_token,
+      release_branch: release_branch,
+      dry_run: dry_run
+    )
+  end
+
 ##############################################################################
 # RELEASE
 ##############################################################################
@@ -181,7 +199,7 @@ end
       sh("standard-version --skip.tag --skip.commit --release-as #{version}")
     end
   end
-
+ 
   # desc "Update changelog"
   # private_lane :update_changelog do |options|
   #   version = options[:version]
