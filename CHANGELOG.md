@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/arjankowski/github-actions-release-test/compare/v1.0.0...v2.0.0) (2021-12-29)
+
+
+### ⚠ BREAKING CHANGES
+
+* add support for standard-version
+
+### New Features and Enhancements
+
+* add support for standard-version ([a22be12](https://github.com/arjankowski/github-actions-release-test/commit/a22be1209fc159e37bf9225855ad98c5b165c767))
+
 ## [1.0.0](https://github.com/box/box-ios-sdk/compare/v4.4.0...v5.0.0) (2021-10-28)
 
 ### ⚠ BREAKING CHANGES
