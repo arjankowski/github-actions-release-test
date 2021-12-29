@@ -145,7 +145,6 @@ private_lane :get_release_notes do |options|
     release_notes = sh("sed -nE '/^## \\[#{escaped_version}\\]/,/^## \\[[0-9]+\.[0-9]+\.[0-9]+\\]/p' CHANGELOG.md | sed '1,2d' | sed '$d'")
   end
   
-  puts("RN: \n #{release_notes}")
   release_notes
 end
 
