@@ -23,6 +23,7 @@ platform :ios do
       puts("version is: #{version}!")
     end
 
+    sh("git checkout ")
     ensure_git_clean(release_branch: release_branch)
     update_changelog(version: version)
     update_version(version: version)
@@ -189,6 +190,9 @@ end
     end
   end
 
+##############################################################################
+# GIT
+##############################################################################
 
   desc "Ensure git is clean"
   private_lane :ensure_git_clean do |options|
@@ -212,4 +216,14 @@ end
     end
   end
 
+  desc "Ensure git is clean"
+  private_lane :checkout_to_branch do |options|
+    release_branch = options[:release_branch]
+    version = options[:version]
+
+    puts("Part 1")
+    sh("git remote update")
+    puts("Part 2")
+    sh("git checkout #{release_branch}")
+    puts("Part 3")
 end
