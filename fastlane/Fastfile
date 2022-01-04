@@ -23,6 +23,7 @@ platform :ios do
       puts("version is: #{version}!")
     end
 
+    ensure_git_clean(release_branch: release_branch)
     update_changelog(version: version)
     update_version(version: version)
 
@@ -114,8 +115,9 @@ platform :ios do
       sh("git checkout -b #{commit_version_tag}")
       sh("git add .")
       sh("git commit -am \"#{commit_title}\"")
-      sh("git push origin #{commit_version_tag}")
+      sh("git push origin -u #{commit_version_tag}")
 
+      # git log --pretty=oneline --abbrev-commit
     create_pull_request(
       api_token: github_token,
       repo: "arjankowski/github-actions-release-test",
