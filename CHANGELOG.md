@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0](https://github.com/arjankowski/github-actions-release-test/compare/v2.1.0...v3.0.0) (2022-01-04)
+
+
+### ⚠ BREAKING CHANGES
+
+* Test fir BR (#14)
+
+### New Features and Enhancements
+
+* Test feat ([#16](https://github.com/arjankowski/github-actions-release-test/issues/16)) ([729cc3d](https://github.com/arjankowski/github-actions-release-test/commit/729cc3d853379cfaa820934a0a2c45f8575a355e))
+
+### Bug Fixes
+
+* Test fir BR ([#14](https://github.com/arjankowski/github-actions-release-test/issues/14)) ([a039b66](https://github.com/arjankowski/github-actions-release-test/commit/a039b66d90bd8188b1fda7e950f89d0c1d56e9ca))
+* Test fix ([#15](https://github.com/arjankowski/github-actions-release-test/issues/15)) ([6a61a8e](https://github.com/arjankowski/github-actions-release-test/commit/6a61a8e9152a48c803917cf8818b152a60241984))
+
 ## [2.1.0](https://github.com/arjankowski/github-actions-release-test/compare/v2.0.0...v2.1.0) (2021-12-29)
 
 
