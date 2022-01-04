@@ -4,9 +4,10 @@ platform :ios do
 
   desc "Create PR with release changes"
   lane :update_ do |options|
-
-    version = get_next_release_version()
-    update_changelog_empty(version: version)
+    release_branch = options[:release_branch] || "main"
+    ensure_git_clean(release_branch: release_branch)
+    # version = get_next_release_version()
+    # update_changelog_empty(version: version)
   end
 
 
@@ -183,6 +184,29 @@ end
     Dir.chdir("..") do
       sh("standard-version --skip.tag --skip.commit --release-as #{version}")
       sh("#{update_changelog_script_path}")
+    end
+  end
+
+
+  desc "Ensure git is clean"
+  private_lane :ensure_git_clean do |options|
+    release_branch = options[:release_branch]
+    current_branch = sh("git rev-parse --abbrev-ref HEAD | tr -d \"\n\"")
+
+    sh("git remote update")
+
+    if current_branch != release_branch
+      UI.user_error!("Local branch: \"#{current_branch}\" is different than release branch: \"#{release_branch}\". Abort script.")
+    end
+
+    different_commits_count = sh(" git rev-list HEAD...origin/#{release_branch} --count | tr -d \"\n\"")
+    if different_commits_count != "0"
+      UI.user_error!("Local branch HEAD is different than remote branch HEAD. Abort script.")
+    end
+ 
+    status_result = sh("git status --porcelain")
+    if status_result != ""
+      UI.user_error!("There are local changes that are not present on the remote. Aborting script.")
     end
   end
 
