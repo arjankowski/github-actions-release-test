@@ -3,15 +3,6 @@ default_platform(:ios)
 platform :ios do
 
   desc "Create PR with release changes"
-  lane :update_ do |options|
-    release_branch = options[:release_branch] || "main"
-    ensure_git_clean(release_branch: release_branch)
-    # version = get_next_release_version()
-    # update_changelog_empty(version: version)
-  end
-
-
-  desc "Create PR with release changes"
   lane :make_pull_request do |options|
     version = options[:version]
     dry_run = options[:dry_run] || false
@@ -23,7 +14,6 @@ platform :ios do
       puts("version is: #{version}!")
     end
 
-    sh("git checkout ")
     ensure_git_clean(release_branch: release_branch)
     update_changelog(version: version)
     update_version(version: version)
@@ -53,22 +43,17 @@ platform :ios do
     )
   end
 
-  desc "Create new release on github"
-  lane :make_publish_pods do |options|
+  desc "Publish to version of cocoapods"
+  lane :make_publish_pod do |options|
     dry_run = options[:dry_run] || false
-    github_token = options[:github_token] || ENV["GITHUB_TOKEN"]
-    release_branch = options[:release_branch] || "main"
+    podpsec_name = ENV["PODSPEC_NAME"]
 
-    version = get_next_release_version()
-    release_notes = get_release_notes(version: version)
-
-    create_github_release(
-      version: version,
-      release_notes: release_notes,
-      github_token: github_token,
-      release_branch: release_branch,
-      dry_run: dry_run
-    )
+    if dry_run == true
+      UI.important("Running in \"dry run\" mode. Publish to cocoapods won't happen.")
+    else
+      sh("pod lib lint --allow-warnings")
+      sh("pod trunk push #{podpsec_name} --allow-warnings")
+    end
   end
 
 ##############################################################################
@@ -118,7 +103,6 @@ platform :ios do
       sh("git commit -am \"#{commit_title}\"")
       sh("git push origin -u #{commit_version_tag}")
 
-      # git log --pretty=oneline --abbrev-commit
     create_pull_request(
       api_token: github_token,
       repo: "arjankowski/github-actions-release-test",
@@ -216,14 +200,4 @@ end
     end
   end
 
-  desc "Ensure git is clean"
-  private_lane :checkout_to_branch do |options|
-    release_branch = options[:release_branch]
-    version = options[:version]
-
-    puts("Part 1")
-    sh("git remote update")
-    puts("Part 2")
-    sh("git checkout #{release_branch}")
-    puts("Part 3")
 end
