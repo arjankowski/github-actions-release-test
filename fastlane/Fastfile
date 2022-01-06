@@ -57,11 +57,15 @@ platform :ios do
   desc "Publish to version of cocoapods"
   lane :make_publish_pod do |options|
     dry_run = options[:dry_run] || false
-    podpsec_name = ENV["PODSPEC_NAME"]
+    trunk_token = ENV["COCOAPODS_TRUNK_TOKEN"]
 
     if dry_run == true
       UI.important("Running in \"dry run\" mode. Publish to cocoapods won't happen.")
     else
+      if trunk_token.nil?
+        UI.user_error!("System environment \"COCOAPODS_TRUNK_TOKEN\" is required to publish a pod. Aborting script.")
+      end
+    
       Dir.chdir("..") do
         sh("pod lib lint --allow-warnings")
         sh(" #{podpsec_name} --allow-warnings")
