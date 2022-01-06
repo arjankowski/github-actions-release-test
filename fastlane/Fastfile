@@ -7,13 +7,18 @@ platform :ios do
     version = options[:version]
     dry_run = options[:dry_run] || false
     github_token = options[:github_token] || ENV["GITHUB_TOKEN"]
+    git_user_name = options[:git_user_name] || ENV["GIT_USER_NAME"]
+    git_user_email = options[:git_user_email] || ENV["GIT_USER_EMAIL"]
     release_branch = options[:release_branch] || "main"
 
     if version.nil?
       version = get_next_release_version()
-      puts("version is: #{version}!")
     end
 
+    setup_git_user(
+      git_user_name: git_user_name, 
+      git_user_email: git_user_email
+    )
     ensure_git_clean(release_branch: release_branch)
     update_changelog(version: version)
     update_version(version: version)
@@ -29,11 +34,17 @@ platform :ios do
   lane :make_release do |options|
     dry_run = options[:dry_run] || false
     github_token = options[:github_token] || ENV["GITHUB_TOKEN"]
+    git_user_name = options[:git_user_name] || ENV["GIT_USER_NAME"]
+    git_user_email = options[:git_user_email] || ENV["GIT_USER_EMAIL"]
     release_branch = options[:release_branch] || "main"
 
     version = get_next_release_version()
     release_notes = get_release_notes(version: version)
 
+    setup_git_user(
+      git_user_name: git_user_name,
+      git_user_email: git_user_email
+    )
     create_github_release(
       version: version,
       release_notes: release_notes,
@@ -53,7 +64,7 @@ platform :ios do
     else
       Dir.chdir("..") do
         sh("pod lib lint --allow-warnings")
-        sh("pod trunk push #{podpsec_name} --allow-warnings")
+        sh(" #{podpsec_name} --allow-warnings")
       end
     end
   end
@@ -179,6 +190,19 @@ end
 ##############################################################################
 # GIT
 ##############################################################################
+
+  desc "Setup git user"
+  private_lane :setup_git_user do |options|
+    git_user_name = options[:git_user_name]
+    git_user_email = options[:git_user_email]
+
+    if git_user_name.nil? || git_user_email.nil?
+      UI.user_error!("Git user.name and user.email are requird. Aborting script.")
+    end
+
+    sh("git config user.name #{git_user_name}")
+    sh("git config user.email #{git_user_email}")
+  end
 
   desc "Ensure git is clean"
   private_lane :ensure_git_clean do |options|
