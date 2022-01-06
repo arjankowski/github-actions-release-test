@@ -17,7 +17,8 @@ platform :ios do
 
     setup_git_user(
       git_user_name: git_user_name, 
-      git_user_email: git_user_email
+      git_user_email: git_user_email,
+      github_token: github_token
     )
     ensure_git_clean(release_branch: release_branch)
     update_changelog(version: version)
@@ -199,13 +200,19 @@ end
   private_lane :setup_git_user do |options|
     git_user_name = options[:git_user_name]
     git_user_email = options[:git_user_email]
+    github_token = options[:github_token]
+    
+    repository_name = ENV["REPOSITORY_NAME"]
+    repository_owner = ENV["REPOSITORY_OWNER"]
 
     if git_user_name.nil? || git_user_email.nil?
       UI.user_error!("Git user.name and user.email are requird. Aborting script.")
     end
 
+    remote_url = "https://#{repository_owner}:#{github_token}@github.com/#{repository_owner}/#{repository_name}.git"
     sh("git config user.name #{git_user_name}")
     sh("git config user.email #{git_user_email}")
+    sh("git remote set-url origin #{remote_url}")
   end
 
   desc "Ensure git is clean"
