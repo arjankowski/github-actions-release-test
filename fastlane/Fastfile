@@ -59,6 +59,7 @@ platform :ios do
   lane :make_publish_pod do |options|
     dry_run = options[:dry_run] || false
     trunk_token = ENV["COCOAPODS_TRUNK_TOKEN"]
+    podpsec_name = ENV["PODSPEC_NAME"]
 
     if dry_run == true
       UI.important("Running in \"dry run\" mode. Publish to cocoapods won't happen.")
@@ -69,7 +70,7 @@ platform :ios do
     
       Dir.chdir("..") do
         sh("pod lib lint --allow-warnings")
-        sh(" #{podpsec_name} --allow-warnings")
+        sh("pod trunk push #{podpsec_name} --allow-warnings")
       end
     end
   end
