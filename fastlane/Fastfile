@@ -11,7 +11,6 @@ platform :ios do
     git_user_name = options[:git_user_name] || ENV["GIT_USER_NAME"]
     git_user_email = options[:git_user_email] || ENV["GIT_USER_EMAIL"]
     release_branch = options[:release_branch] || "main"
-    
 
     if version.nil?
       version = get_next_release_version()
