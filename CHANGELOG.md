@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.1](https://github.com/arjankowski/github-actions-release-test/compare/v3.1.0...v3.1.1) (2022-01-13)
+
+
+### Bug Fixes
+
+* adjust fastlane 8 ([#29](https://github.com/arjankowski/github-actions-release-test/issues/29)) ([a2400ca](https://github.com/arjankowski/github-actions-release-test/commit/a2400ca559042d5b9344cde61e733af6405856e3))
+
 ## [3.1.0](https://github.com/arjankowski/github-actions-release-test/compare/v3.0.0...v3.1.0) (2022-01-06)
 
 
