@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.1](https://github.com/arjankowski/github-actions-release-test/compare/v4.0.0...v4.0.1) (2022-01-13)
+
+
+### Bug Fixes
+
+* Fix fastlane KB ([#42](https://github.com/arjankowski/github-actions-release-test/issues/42)) ([5a324c5](https://github.com/arjankowski/github-actions-release-test/commit/5a324c548c5103de660a68222d6311828f2ece16))
+
 ## [4.0.0](https://github.com/arjankowski/github-actions-release-test/compare/v3.1.1...v4.0.0) (2022-01-13)
 
 
