@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'PublishAJLibrary'
-  s.version          = "3.1.0"
+  s.version          = "3.1.1"
   s.summary          = 'A description of PublishAJLibrary. This is a temporary description'
 
 # This description is used to generate tags and improve search results.
