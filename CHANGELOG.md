@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.0.0](https://github.com/arjankowski/github-actions-release-test/compare/v3.1.1...v4.0.0) (2022-01-13)
+
+
+### ⚠ BREAKING CHANGES
+
+* 14 (#38)
+* fastlane 10 (#34)
+
+### New Features and Enhancements
+
+* 12 ([#36](https://github.com/arjankowski/github-actions-release-test/issues/36)) ([65f9ea9](https://github.com/arjankowski/github-actions-release-test/commit/65f9ea93f2eeeaf515eec1b30b0b0cd05611f2a1))
+* 14 ([#38](https://github.com/arjankowski/github-actions-release-test/issues/38)) ([7cb2d65](https://github.com/arjankowski/github-actions-release-test/commit/7cb2d651e714b9ec48cd7720a6037718a3329771))
+
+### Bug Fixes
+
+* 13 ([#37](https://github.com/arjankowski/github-actions-release-test/issues/37)) ([bc83196](https://github.com/arjankowski/github-actions-release-test/commit/bc83196d412ea96b226f4fa804c7da992fbdcf46))
+* 15 ([#39](https://github.com/arjankowski/github-actions-release-test/issues/39)) ([502ceae](https://github.com/arjankowski/github-actions-release-test/commit/502ceaec4068f9d16e1980a0e4302d37ea68cf92))
+* fastlane 10 ([#34](https://github.com/arjankowski/github-actions-release-test/issues/34)) ([87d9109](https://github.com/arjankowski/github-actions-release-test/commit/87d9109b7a1e6ebb90ef0d4c5eea1daf2293772b))
+
 ### [3.1.1](https://github.com/arjankowski/github-actions-release-test/compare/v3.1.0...v3.1.1) (2022-01-13)
 
 
