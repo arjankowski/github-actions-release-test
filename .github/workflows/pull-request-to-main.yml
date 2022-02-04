@@ -1,0 +1,25 @@
+name: Pull request checklist
+on: 
+  pull_request:
+    branches:
+      - main
+jobs:
+  Run-Tests:
+    runs-on: macos-11
+    strategy:
+      matrix:
+        destination: ['platform=iOS Simulator,OS=14.5,name=iPhone 11']
+    steps:
+      - name: Git - Checkout
+        uses: actions/checkout@v2
+      - name: List Xcode available versions
+        run: ls -n /Applications/ | grep Xcode*
+      - name: Setup - Xcode
+        run: sudo xcode-select -s /Applications/Xcode_12.5.1.app
+      - name: Setup - Ruby and bundler dependencies
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+      - name: Logging
+        run: |
+          echo "${{toJSON(github.event)}}"
