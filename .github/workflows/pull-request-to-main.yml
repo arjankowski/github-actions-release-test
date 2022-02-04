@@ -22,4 +22,4 @@ jobs:
           bundler-cache: true
       - name: Logging
         run: |
-          echo "${{toJSON(github.event)}}"
+          echo "${{toJSON(github)}}"
