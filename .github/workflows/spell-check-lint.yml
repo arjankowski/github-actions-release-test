@@ -11,4 +11,4 @@ jobs:
       - name: Verify pull request title
         uses: arjankowski/pull_request_lint@v1.0.0
         with:
-          spelling-list: 'tytul'
+          spelling-list: 'tytul Hello'
