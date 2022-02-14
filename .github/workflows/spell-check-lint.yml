@@ -8,7 +8,13 @@ jobs:
   lint-pull-request-title:
     runs-on: ubuntu-latest
     steps:
+      - name: Print path
+        shell: bash
+        run: pwd
       - name: Verify pull request title
-        uses: box/box-sdk-spellchecker@v1.0.0
-        with:
-          spelling-list: 'biedronka'
+        uses: ./pull_request_lint
+
+      # - name: Verify pull request title
+      #   uses: arjankowski/pull_request_lint@v1.0.0
+      #   with:
+      #     spelling-list: 'biedronka'
