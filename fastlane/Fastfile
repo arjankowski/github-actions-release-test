@@ -28,8 +28,9 @@ platform :ios do
 
     create_github_pull_request(
       version: version,
+      github_token: github_token,
       release_branch: release_branch,
-      github_token: github_token
+      dry_run: dry_run
     )
   end
 
@@ -86,27 +87,35 @@ platform :ios do
   desc "Create release on GitHub"
   private_lane :create_github_release do |options|
     version = options[:version]
-    version_tag = "v#{version}"
-    release_notes = options[:release_notes]
     github_token = options[:github_token]
     release_branch = options[:release_branch]
-    dry_run = options[:dry_run] 
+    dry_run = options[:dry_run]
+    repository_name = ENV["REPOSITORY_NAME"]
+    repository_owner = ENV["REPOSITORY_OWNER"]
+    commit_version_tag = "v#{version}"
+    commit_title = "chore: release #{commit_version_tag}"
 
     if dry_run == true
-      UI.important("Running in \"dry run\" mode. Release won't be published.")
+      UI.important("Running in \"dry run\" mode. PR won't be created.")
     else
+    Dir.chdir("..") do
+      sh("git checkout -b #{commit_version_tag}")
+      sh("git add .")
+      sh("git commit -am \"#{commit_title}\"")
+      sh("git push origin -u #{commit_version_tag}")
+
       if github_token.nil?
-        UI.user_error!("GitHub Token is required to make release.")
+        UI.user_error!("GitHub Token is required to create PR.")
       end
 
-      set_github_release(
-      repository_name: "arjankowski/github-actions-release-test",
-      api_token: github_token,
-      name: version_tag,
-      tag_name: version_tag,
-      description: release_notes,
-      commitish: release_branch
-    )
+      create_pull_request(
+        api_token: github_token,
+        repo: "#{repository_owner}/#{repository_name}",
+        title: "#{commit_title}",
+        head: "#{commit_version_tag}",
+        base: "#{release_branch}",
+      )
+      end
     end
   end
 
