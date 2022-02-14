@@ -16,6 +16,7 @@ jobs:
         with:
           ref: refs/heads/main
           repository: box/box-sdk-spellchecker
+          token: ${{ secrets.GH_TOKEN }} 
           # token: ${{ secrets.GH_PAT }} # `GH_PAT` is a secret that contains your PAT
 
 
