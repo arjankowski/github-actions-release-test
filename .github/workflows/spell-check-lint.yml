@@ -11,8 +11,11 @@ jobs:
       - name: Print path
         shell: bash
         run: pwd
-      - name: Verify pull request title
-        uses: ./pull_request_lint
+      - name: Checkout private tools
+        uses: actions/checkout@v2
+        with:
+          repository: box/box-sdk-spellchecker
+          # token: ${{ secrets.GH_PAT }} # `GH_PAT` is a secret that contains your PAT
 
 
       # - name: Verify pull request title
