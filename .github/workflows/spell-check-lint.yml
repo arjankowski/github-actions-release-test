@@ -14,7 +14,7 @@ jobs:
       - name: Checkout private tools
         uses: actions/checkout@v2
         with:
-          path: main
+          ref: refs/heads/main
           repository: box/box-sdk-spellchecker
           # token: ${{ secrets.GH_PAT }} # `GH_PAT` is a secret that contains your PAT
 
