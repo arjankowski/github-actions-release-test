@@ -18,9 +18,5 @@ jobs:
           repository: box/box-sdk-spellchecker
           token: ${{ secrets.GH_TOKEN }} 
           # token: ${{ secrets.GH_PAT }} # `GH_PAT` is a secret that contains your PAT
-
-
-      # - name: Verify pull request title
-      #   uses: arjankowski/pull_request_lint@v1.0.0
-      #   with:
-      #     spelling-list: 'biedronka'q
+      - name: Verify pull request title
+        uses: ./box-sdk-spellchecker
