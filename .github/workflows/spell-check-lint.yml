@@ -14,7 +14,8 @@ jobs:
       - name: Verify pull request title
         uses: ./pull_request_lint
 
+
       # - name: Verify pull request title
       #   uses: arjankowski/pull_request_lint@v1.0.0
       #   with:
-      #     spelling-list: 'biedronka'
+      #     spelling-list: 'biedronka'q
