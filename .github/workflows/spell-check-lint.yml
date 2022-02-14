@@ -22,4 +22,4 @@ jobs:
         shell: bash
         run: ls -la
       - name: Verify pull request title
-        uses: ./box-sdk-spellchecker
+        uses: ./
