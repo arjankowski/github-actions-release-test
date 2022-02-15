@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.1.0](https://github.com/arjankowski/github-actions-release-test/compare/v5.0.0...v5.1.0) (2022-02-15)
+
+
+### New Features and Enhancements
+
+* Change fastfile ([#57](https://github.com/arjankowski/github-actions-release-test/issues/57)) ([7a8e772](https://github.com/arjankowski/github-actions-release-test/commit/7a8e7720cdb281843cadbcb7db39297a8c176687))
+
 ## [5.0.0](https://github.com/arjankowski/github-actions-release-test/compare/v4.0.0...v5.0.0) (2022-02-15)
 
 
