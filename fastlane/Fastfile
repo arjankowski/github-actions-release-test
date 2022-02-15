@@ -113,7 +113,6 @@ private_lane :create_github_release do |options|
   end
 end
 
-
   desc "Commit version update"
   private_lane :create_github_pull_request do |options|
     version = options[:version]
