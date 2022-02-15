@@ -258,5 +258,4 @@ end
       UI.user_error!("There are local changes that are not present on the remote. Aborting script.")
     end
   end
-
 end
