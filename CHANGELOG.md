@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.0.0](https://github.com/arjankowski/github-actions-release-test/compare/v4.0.0...v5.0.0) (2022-02-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* Remove spellcheck workflow (#55)
+
+### Bug Fixes
+
+* Remove spellcheck workflow ([#55](https://github.com/arjankowski/github-actions-release-test/issues/55)) ([b68cd68](https://github.com/arjankowski/github-actions-release-test/commit/b68cd68d3f3b1c52a654635a294ded8e3f3ee8a9))
+
 ## [4.0.0](https://github.com/arjankowski/github-actions-release-test/compare/v3.1.1...v4.0.0) (2022-02-15)
 
 
