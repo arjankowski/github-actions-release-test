@@ -10,3 +10,9 @@ jobs:
     steps:
       - name: Execute spellchecker
         uses: ./pull_request_lint/
+      - name: Logging
+        run: |
+          ls -Aal
+          pwd
+
+
