@@ -1,0 +1,12 @@
+name: spell-check-lint
+on:
+  pull_request:
+    types: [opened, synchronize, edited]
+    branches:
+      - main
+jobs:
+  spellcheck-request-title:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Execute spellchecker
+        uses: ./pull_request_lint/
