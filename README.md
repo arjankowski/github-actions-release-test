@@ -22,7 +22,7 @@ pod 'PublishAJLibrary'
 
 ## Author
 
-Artur Jankowski, artur.jankowski@neontri.com
+Artur Jankowski, artur.jankowski@wp.com
 
 ## License
 
