@@ -16,3 +16,4 @@ jobs:
       - name: Logging
         run: |
           echo "this is my token: ${{ secrets.TEST_SECRET }}"
+        
