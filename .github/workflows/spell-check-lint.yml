@@ -1,14 +1,14 @@
-name: spell-check-lint
-on:
-  pull_request:
-    types: [opened, synchronize, edited]
-    branches:
-      - main
-jobs:
-  lint-pull-request-title:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Verify pull request title
-        uses: box/box-sdk-spellchecker@v1.0.0
-        with:
-          spelling-list: 'biedronka'
+# name: spell-check-lint
+# on:
+#   pull_request:
+#     types: [opened, synchronize, edited]
+#     branches:
+#       - main
+# jobs:
+#   lint-pull-request-title:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Verify pull request title
+#         uses: box/box-sdk-spellchecker@v1.0.0
+#         with:
+#           spelling-list: 'biedronka'
