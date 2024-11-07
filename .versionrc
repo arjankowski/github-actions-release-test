@@ -2,7 +2,7 @@
   "types": [
     {"type": "feat", "section": "New Features and Enhancements", "hidden": false},
     {"type": "fix", "section": "Bug Fixes", "hidden": false},
-    {"type": "chore", "hidden": true},
+    {"type": "chore", "hidden": false},
     {"type": "docs", "hidden": true},
     {"type": "style", "hidden": true},
     {"type": "refactor", "hidden": true},
