@@ -2,14 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [3.1.1](https://github.com/arjankowski/github-actions-release-test/compare/v3.1.0...v3.1.1) (2022-01-13)
+## [3.1.1](https://github.com/arjankowski/github-actions-release-test/compare/v3.1.0...v3.1.1) (2022-01-15)
 
 
 ### Bug Fixes
 
-* adjust fastlane 8 ([#29](https://github.com/arjankowski/github-actions-release-test/issues/29)) ([a2400ca](https://github.com/arjankowski/github-actions-release-test/commit/a2400ca559042d5b9344cde61e733af6405856e3))
-* fastlane 9 ([#32](https://github.com/arjankowski/github-actions-release-test/issues/32)) ([e97e4a6](https://github.com/arjankowski/github-actions-release-test/commit/e97e4a6a561daf2993b8a139d9222318ec7422f0))
+* Add missing fields to Sign Template Signer and fix AI schema (box/box-openapi[#451](https://github.com/box/box-typescript-sdk-gen/issues/451)) ([#317](https://github.com/box/box-typescript-sdk-gen/issues/317)) ([340fbd8](https://github.com/box/box-typescript-sdk-gen/commit/340fbd84f6fa408155c6a2a4b9b7b03b88f76f24))
+* Fix `IntegrationMapping` schemas (box/box-codegen[#551](https://github.com/box/box-typescript-sdk-gen/issues/551)) ([#315](https://github.com/box/box-typescript-sdk-gen/issues/315)) ([a863b1e](https://github.com/box/box-typescript-sdk-gen/commit/a863b1eb8fcfccd78714e3f52ce96d89ef69ca72))
 
+
+### New Features and Enhancements
+
+* Add new parameters to Box AI methods and introduce `AiResponseFull` variant (box/box-openapi[#446](https://github.com/box/box-typescript-sdk-gen/issues/446)) ([#313](https://github.com/box/box-typescript-sdk-gen/issues/313)) ([d9664fd](https://github.com/box/box-typescript-sdk-gen/commit/d9664fd7d431685c8e115415085bbe69d17f272d))
+* Include URL into `FetchOptions` (box/box-codegen[#549](https://github.com/box/box-typescript-sdk-gen/issues/549)) ([#319](https://github.com/box/box-typescript-sdk-gen/issues/319)) ([30eaa6b](https://github.com/box/box-typescript-sdk-gen/commit/30eaa6ba7aa0fcd5e2f71026d7bf58729d387221))
+* 
 ## [3.1.0](https://github.com/arjankowski/github-actions-release-test/compare/v3.0.0...v3.1.0) (2022-01-06)
 
 
@@ -26,7 +32,7 @@ All notable changes to this project will be documented in this file. See [standa
 * adjust fastlane 6 ([#26](https://github.com/arjankowski/github-actions-release-test/issues/26)) ([edfc469](https://github.com/arjankowski/github-actions-release-test/commit/edfc4698f99da65e3c90a2718e3150c0cfc1beab))
 * adjust fastlane 7 ([#27](https://github.com/arjankowski/github-actions-release-test/issues/27)) ([f360ca1](https://github.com/arjankowski/github-actions-release-test/commit/f360ca1f189db806053ad6abc5f903fec31db21a))
 
-## [3.0.0](https://github.com/arjankowski/github-actions-release-test/compare/v2.1.0...v3.0.0) (2022-01-04)
+### [3.0.0](https://github.com/arjankowski/github-actions-release-test/compare/v2.1.0...v3.0.0) (2022-01-04)
 
 
 ### ⚠ BREAKING CHANGES
