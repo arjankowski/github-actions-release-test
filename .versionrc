@@ -6,6 +6,6 @@
     {"type": "docs", "hidden": true},
     {"type": "style", "hidden": true},
     {"type": "refactor", "hidden": true},
-    {"type": "test", "hidden": true}
+    {"type": "test", "hidden": false}
   ]
 }
